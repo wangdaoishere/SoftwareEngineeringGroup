@@ -1,3 +1,4 @@
+#this is a Inverse cosine function algorithm
 float aacos(float x){
     unsigned char i;
     float ans=x,t1=1,t2=x;x*=x;
