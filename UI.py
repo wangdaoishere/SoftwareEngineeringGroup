@@ -55,10 +55,14 @@ class Example(QWidget):
         
         self.btn_format = QPushButton('deg', self) 
         self.btn_format.clicked.connect(self.btn_format_on_click)
+
         
         self.qle_input = QLineEdit(self)
+        self.qle_input.textEdited.connect(self.input_format_check)
+        self.qle_input.returnPressed.connect(self.btn_Calc_on_click)
         
         self.qle_output = QLineEdit(self)
+        self.qle_output.setFocusPolicy(Qt.NoFocus)
         
         self.qlb_result = QLabel('result',self)
         
@@ -88,6 +92,17 @@ class Example(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
         
+    def input_format_check(self):
+    	try:
+    		str_input = self.qle_input.text().strip();
+    		self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)))
+    	except:
+    		self.qle_input.setStyleSheet("color: red;")
+    		self.btn_Calc.setEnabled(False)
+    	else:
+    		self.qle_input.setStyleSheet("color: black;")
+    		self.btn_Calc.setEnabled(True)
+		
     def btn_format_on_click(self):
         sender = self.sender()
         text = sender.text()
@@ -97,7 +112,10 @@ class Example(QWidget):
         str_input = self.qle_input.text().strip();
         if(str_input == '') :
             return
-        self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)))))
+        try:
+        	self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)))))
+        except:
+        	pass
         
 if __name__ == '__main__':
 
