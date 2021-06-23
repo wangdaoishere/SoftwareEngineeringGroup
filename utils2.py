@@ -6,5 +6,10 @@ def absxxxx(x):
     else :
         return -x
 
+def invert_rad_to_angle(rads):
+
+    angle =  rads * 180 / myPI
+    return angle
+
 
 
