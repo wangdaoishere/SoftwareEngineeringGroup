@@ -61,4 +61,8 @@ def myRound(result):
         result = 0.5
     elif(myAbs(result+0.5)<0.00000001):
         result = -0.5
+    elif (myAbs(result - 0) < 0.00000001):
+        result = 0
     return result
+
+
