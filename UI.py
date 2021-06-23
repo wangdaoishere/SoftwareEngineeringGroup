@@ -6,17 +6,28 @@ from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QComboBox,QHB
 class Interface_method:
     def sin(self,value):
         return math.sin(value)
+        
     def arcsin(self,value):
         return math.asin(value)
+        
     def tan(self,value):
         return math.tan(value)
 
     def arctan(self,value):
-        return math.atan(value) 
+        return math.atan(value)
+         
     def get_func_name(self):
-        return sorted(self.valueFunctions.keys())   
-    def get_func_result(self,name,value):
-        return self.valueFunctions[name](value)
+        return sorted(self.valueFunctions.keys()) 
+          
+    def get_func_result(self,name,value,isdeg):
+    	if isdeg == True :
+    		if "arc" in name :
+    			return math.degrees(self.valueFunctions[name](value))
+    		else :
+    			return self.valueFunctions[name](math.radians(value))
+    	else :
+        	return self.valueFunctions[name](value)
+        
     def __init__(self):
         self.valueFunctions = {
                         'sin': self.sin, 
@@ -52,11 +63,15 @@ class Example(QWidget):
         
         self.cb_method = QComboBox(self)
         self.cb_method.addItems(self.method.get_func_name())
+        self.cb_method.currentIndexChanged.connect(self.cb_method_changed)
         
-        self.btn_format = QPushButton('deg', self) 
-        self.btn_format.clicked.connect(self.btn_format_on_click)
+        self.btn_format_input = QPushButton('deg', self) 
+        self.btn_format_input.clicked.connect(self.btn_format_on_click)
+        self.btn_format_input.setEnabled(False)
+        
+        self.btn_format_output = QPushButton('deg', self) 
+        self.btn_format_output.clicked.connect(self.btn_format_on_click)
 
-        
         self.qle_input = QLineEdit(self)
         self.qle_input.textEdited.connect(self.input_format_check)
         self.qle_input.returnPressed.connect(self.btn_Calc_on_click)
@@ -72,11 +87,11 @@ class Example(QWidget):
         
         self.hbox_input.addWidget(self.cb_method,1)
         self.hbox_input.addWidget(self.qle_input,4)
-        self.hbox_input.addWidget(self.btn_format,1)
+        self.hbox_input.addWidget(self.btn_format_input,1)
         
         self.hbox_output.addWidget(self.qlb_result,1,Qt.AlignCenter)
         self.hbox_output.addWidget(self.qle_output,4)
-        self.hbox_output.addStretch(1)
+        self.hbox_output.addWidget(self.btn_format_output,1)
         
         self.vbox.addLayout(self.hbox_input)
         self.vbox.addLayout(self.hbox_output)
@@ -95,13 +110,22 @@ class Example(QWidget):
     def input_format_check(self):
     	try:
     		str_input = self.qle_input.text().strip();
-    		self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)))
+    		self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)),self.btn_format_input.text() == "deg" and self.btn_format_input.isEnabled() or self.btn_format_output.text() == "deg" and self.btn_format_output.isEnabled())
     	except:
     		self.qle_input.setStyleSheet("color: red;")
     		self.btn_Calc.setEnabled(False)
     	else:
     		self.qle_input.setStyleSheet("color: black;")
     		self.btn_Calc.setEnabled(True)
+    	
+    def cb_method_changed(self):
+    	if "arc" in self.cb_method.currentText() :
+    		self.btn_format_input.setEnabled(False)
+    		self.btn_format_output.setEnabled(True)
+    	else :
+    		self.btn_format_input.setEnabled(True)
+    		self.btn_format_output.setEnabled(False)
+    	self.input_format_check()
 		
     def btn_format_on_click(self):
         sender = self.sender()
@@ -113,7 +137,7 @@ class Example(QWidget):
         if(str_input == '') :
             return
         try:
-        	self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)))))
+        	self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)),self.btn_format_input.text() == "deg" and self.btn_format_input.isEnabled() or self.btn_format_output.text() == "deg" and self.btn_format_output.isEnabled())))
         except:
         	pass
         
