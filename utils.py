@@ -19,7 +19,8 @@ def myPower(x,t):
     return m
 
 #诱导公式使定义域收敛
-def inductionFormula(x,y):
+def inductionFormula(x):
+
 
     if x > myPI:
 
@@ -42,3 +43,22 @@ def inductionFormula(x,y):
     else: y = x
 
     return y
+
+#绝对值函数
+
+def myAbs(x):
+
+    if x >= 0:
+        x = x
+    else:
+        x = -x
+    return x
+
+#截尾函数，当结果应为+-0.5时，消除误差
+
+def myRound(result):
+    if(myAbs(result-0.5)<0.00000001):
+        result = 0.5
+    elif(myAbs(result+0.5)<0.00000001):
+        result = -0.5
+    return result
