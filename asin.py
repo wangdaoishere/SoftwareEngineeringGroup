@@ -26,7 +26,6 @@ def asin(x, inputflag ):
             result += result_c * result_b
             result_a = 1.0; result_b = 1.0
     return result
-
-print(asin(0.5,1))
+##获取结果
 
 
