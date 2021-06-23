@@ -52,7 +52,7 @@ def atan(x, inputflag,):
                 sum += item
                 n += 2
             return sum
-
+#将X与-pi/2,pi/2相加返回的结果值精度在0.000001
 
 
 
