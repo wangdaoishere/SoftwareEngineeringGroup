@@ -1,2 +1,0 @@
-# SoftwareEngineeringGroup
-2021年春季现代软件工程小组作业仓库

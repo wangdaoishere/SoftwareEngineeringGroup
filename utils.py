@@ -1,5 +1,3 @@
-#本文件提供 阶乘函数 与 幂函数
-#阶乘函数
 myPI = 3.1415926535897932
 
 def myFactorial(a):
@@ -20,34 +18,24 @@ def myPower(x,t):
 
 #诱导公式使定义域收敛
 def inductionFormula(x):
-
-
     if x > myPI:
-
         while True:
-
             x -= (2 * myPI)
-
             if x <= myPI:
                 y = x
                 break
     elif x < (-1 * myPI):
-
         while True:
-
             x += (2 * myPI)
-
             if x >= (-1 * myPI):
                 y = x
                 break
     else: y = x
-
     return y
 
 #绝对值函数
 
 def myAbs(x):
-
     if x >= 0:
         x = x
     else:
@@ -65,4 +53,12 @@ def myRound(result):
         result = 0
     return result
 
+def absxxxx(x):
+    if x >= 0 :
+        return x
+    else:
+        return -x
 
+def invert_angle_to_rad(angles):
+    angle = angles * myPI / 180
+    return angle
