@@ -3,6 +3,8 @@ import math
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QComboBox,QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit, QLabel
 
+# interface of the method, all the method become a function of this class
+# the relation between method name and method must be added to valueFunctions
 class Interface_method:
     def sin(self,value):
         return math.sin(value)
@@ -44,7 +46,8 @@ class Example(QWidget):
         self.method=Interface_method()
         self.initUI()
     def initUI(self):
-        # adaptive screen resolution
+    
+        # adaptive screen resolution      
         self.desktop = QApplication.desktop()
         self.screenRect = self.desktop.screenGeometry()
         self.height = self.screenRect.height()
@@ -52,12 +55,11 @@ class Example(QWidget):
         #self.setGeometry(300, 300,  int(self.width*0.2), int(self.width*0.2*0.3))
         self.setFixedSize(int(self.width*0.2), int(self.width*0.2*0.3))
         
+        # Center the window
         self.center()
         self.setWindowTitle('Calculator')
-               
-        #print(self.height)
-        #print(self.width)
-            
+        
+        # Add UI
         self.btn_Calc = QPushButton('Calc', self)
         self.btn_Calc.clicked.connect(self.btn_Calc_on_click)
         
@@ -81,6 +83,7 @@ class Example(QWidget):
         
         self.qlb_result = QLabel('result',self)
         
+        # Add layout
         self.hbox_input = QHBoxLayout()
         self.hbox_output = QHBoxLayout()
         self.vbox = QVBoxLayout()
@@ -96,7 +99,7 @@ class Example(QWidget):
         self.vbox.addLayout(self.hbox_input)
         self.vbox.addLayout(self.hbox_output)
         self.vbox.addWidget(self.btn_Calc)
-        #vbox.setContentsMargins(0,0,0,0)
+
         self.setLayout(self.vbox)
         self.show()
         
@@ -106,18 +109,27 @@ class Example(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        
+    
+    # return the format of input or output
+    def isdeg(self):
+    	return (self.btn_format_input.text() == "deg" and self.btn_format_input.isEnabled() 
+    			or self.btn_format_output.text() == "deg" and self.btn_format_output.isEnabled())
+    
+    # check the input format
     def input_format_check(self):
     	try:
     		str_input = self.qle_input.text().strip();
-    		self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)),self.btn_format_input.text() == "deg" and self.btn_format_input.isEnabled() or self.btn_format_output.text() == "deg" and self.btn_format_output.isEnabled())
+    		self.method.get_func_result(self.cb_method.currentText(),\
+    									float(eval(str_input)),\
+    									self.isdeg())
     	except:
     		self.qle_input.setStyleSheet("color: red;")
     		self.btn_Calc.setEnabled(False)
     	else:
     		self.qle_input.setStyleSheet("color: black;")
     		self.btn_Calc.setEnabled(True)
-    	
+    
+    # enable the format change button according to selected method
     def cb_method_changed(self):
     	if "arc" in self.cb_method.currentText() :
     		self.btn_format_input.setEnabled(False)
@@ -126,18 +138,22 @@ class Example(QWidget):
     		self.btn_format_input.setEnabled(True)
     		self.btn_format_output.setEnabled(False)
     	self.input_format_check()
-		
+	
     def btn_format_on_click(self):
         sender = self.sender()
         text = sender.text()
         sender.setText("rad" if text == "deg" else "deg")
     
+    # calculate the result
     def btn_Calc_on_click(self):
         str_input = self.qle_input.text().strip();
         if(str_input == '') :
             return
         try:
-        	self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),float(eval(str_input)),self.btn_format_input.text() == "deg" and self.btn_format_input.isEnabled() or self.btn_format_output.text() == "deg" and self.btn_format_output.isEnabled())))
+        	self.qle_output.setText(str(self.method.get_func_result(self.cb_method.currentText(),\
+    									float(eval(str_input)),\
+    									self.isdeg())\
+        	))
         except:
         	pass
         
