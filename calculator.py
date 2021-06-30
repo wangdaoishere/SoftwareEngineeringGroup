@@ -7,19 +7,6 @@ from function import *
 from utils import *
 
 class Interface_method:
-    # def input_invert(self, value, inputflag):
-    #     if (inputflag == 1):  # 输入为角度时，将角度转换为弧度
-    #         value = value * myPI / 180
-    #     else:
-    #         value = value
-    #     return value
-    #
-    # def output_invert(self, value, outputflag):
-    #     if (outputflag == 1):  # 输入为角度时，将角度转换为弧度
-    #         value = value * 180 / myPI
-    #     else:
-    #         value = value
-    #     return value
 
     def sin(self, value):
         return mySin(value)

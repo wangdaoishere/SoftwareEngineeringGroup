@@ -5,3 +5,7 @@
 Python 3.8  
 Qt  PyQt5.QtCore    PyQt5.QtWidgets  
 UI设计采用docker：https://github.com/jozo/docker-pyqt5
+
+
+
+
