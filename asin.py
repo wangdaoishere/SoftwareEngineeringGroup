@@ -28,4 +28,6 @@ def asin(x, inputflag ):
     return result
 ##获取结果
 
-
+#print(asin(-1))
+#print(asin(1))
+#print(asin(0.5))测试角度为90， -90 ， 30的典型值，输出可判断是否为正确的输出弧度

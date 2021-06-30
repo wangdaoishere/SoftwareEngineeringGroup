@@ -49,4 +49,7 @@ def atan(x):
             sum += item
             n += 2
     return sum
-        
+
+#print(atan(1))
+#print(atan(0)
+#print(atan(2000000))测试典型值其中2000000应该接近pi/2的值可以利用弧度转换看出接近（90°）
