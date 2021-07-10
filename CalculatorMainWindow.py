@@ -1,6 +1,7 @@
 import sys
 from CalculatorUi import UiMainWindow
 from function import *
+from CalcuTest import test
 from PyQt5.QtWidgets import QMainWindow, QApplication
 import math
 
@@ -29,6 +30,7 @@ class MainWindow(QMainWindow):
         self.ui.cos_button.clicked.connect(lambda: self.compute(1))
         self.ui.arctan_button.clicked.connect(lambda: self.compute(2))
         self.ui.arcsin_button.clicked.connect(lambda: self.compute(3))
+        self.ui.test_button.clicked.connect(self.test_function)
 
     def str_to_number(self):
         """
@@ -138,7 +140,12 @@ class MainWindow(QMainWindow):
         else:
             display_content = "-" + display_content
         self.display_to_box(display_content)
-
+    def test_function(self):
+        if test() :
+            self.display_to_box("test pass")
+        else :
+            self.display_to_box("test error")
+        self.is_compute = True
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
