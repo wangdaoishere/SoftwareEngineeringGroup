@@ -1,11 +1,8 @@
 import sys
-from TriCalculatorUi.CalculatorUi import UiMainWindow
-from TriFunctions.sin import sin
-from TriFunctions.cos import cos
-from TriFunctions.arcsin import asin
-from TriFunctions.arctan import atan
+from CalculatorUi import UiMainWindow
+from function import *
 from PyQt5.QtWidgets import QMainWindow, QApplication
-
+import math
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -61,16 +58,16 @@ class MainWindow(QMainWindow):
             return
         input_value = self.str_to_number()  # 获取用户输入
         if compute_type == 0:
-            result = sin(input_value)  # 计算sin
+            result = mySin(input_value)  # 计算sin
         elif compute_type == 1:
-            result = cos(input_value)  # 计算cos
+            result = myCos(input_value)  # 计算cos
         elif compute_type == 2:
             result = str(atan(input_value)) + "°"  # 计算arctan
         else:
             result = asin(input_value)  # 计算arcsin
             if isinstance(result, bool):
                 # 返回一个bool值说明输入有误，显示提示信息
-                result = "无效输入"
+                result = "invalid input"
                 self.is_error = True
             else:
                 result = str(result) + "°"

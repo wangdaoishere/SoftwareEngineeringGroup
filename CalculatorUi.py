@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 WIDTH = (75 + 2 * 2) * 4 + 3  # 窗口宽度
-HEIGHT = (50 + 2 * 2) * 5 + 3 + 70  # 窗口高度
+HEIGHT = (50 + 2 * 2) * 6 + 3 + 70  # 窗口高度
 # 按钮样式
 button_style = "QPushButton{" \
                "background-color:rgb(0,0,0);" \
@@ -61,7 +61,7 @@ class FunctionButton(Button):
 
     def __init__(self, parent=None):
         super(FunctionButton, self).__init__(parent)
-        self.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding))
+        self.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
 
 
 class UiMainWindow(object):
@@ -149,6 +149,11 @@ class UiMainWindow(object):
         self.sign_button = FunctionButton(self.gridLayoutWidget)
         self.sign_button.setObjectName("sign_button")
         self.gridLayout.addWidget(self.sign_button, 5, 0, 1, 1)
+        
+        self.test_button = FunctionButton(self.gridLayoutWidget)
+        self.test_button.setObjectName("test_button")
+        self.gridLayout.addWidget(self.test_button, 6, 0, 1, 4)
+        
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -175,3 +180,4 @@ class UiMainWindow(object):
         self.number_4_button.setText(_translate("MainWindow", "4"))
         self.del_button.setText(_translate("MainWindow", "del"))
         self.sign_button.setText(_translate("MainWindow", "+/-"))
+        self.test_button.setText(_translate("MainWindow", "test"))

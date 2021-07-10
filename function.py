@@ -1,19 +1,20 @@
 from utils import *
+import math
 # sin函数
-def mySin(x):       #inputFlag为1，角度，inputFlag为2，弧度
+def mySin(x):					#inputFlag为1，角度，inputFlag为2，弧度
     # if(inputFlag==1):         #输入为角度时，将角度转换为弧度
     #     x = x * myPI / 180
     # else:
     #     x = x
+	x=math.radians(x)
+	y= inductionFormula(x)  #诱导公式限制弧度制的输入为-π到π之间
+	i=1                       #泰勒展开式项数标识位
+	f=1                       #正负标识位
+	result=0                      #结果值
+	num=0                     #
+	n=10                      #泰勒展开式项数
 
-    y =  inductionFormula(x)  #诱导公式限制弧度制的输入为-π到π之间
-    i=1                       #泰勒展开式项数标识位
-    f=1                       #正负标识位
-    result=0                      #结果值
-    num=0                     #
-    n=10                      #泰勒展开式项数
-
-    while True:
+	while True:
          g = 2*i-1            #项数的值
          b = myFactorial(g)   #阶乘结果
          t = myPower(y,g)     #乘方结果
@@ -23,34 +24,39 @@ def mySin(x):       #inputFlag为1，角度，inputFlag为2，弧度
          f = -f               #正负标识位
          if(num == n):
             break
-    result = myRound(result)   #自定义截尾函数，消除误差
-    return result
+	result = myRound(result)   #自定义截尾函数，消除误差
+	return round(result,5)
 
-def myCos(x):       #inputFlag为1，角度，inputFlag为2，弧度
-    y = x + 0.5 * myPI          #sin函数与cos函数的转换
+def myCos(x):       	#inputFlag为1，角度，inputFlag为2，弧度
+    y = x + 90         #sin函数与cos函数的转换
     return (mySin(y))
 
 
 def asin(x):
-    result = x
-    result_a = 1.0
-    result_b = 1.0
-    result_c = 1.0
-    ii = 0
-    if (x == 1 ):
-        result = 90
-    elif (x == -1):
-        result = -90
-    elif ((x < 1) and (x > -1)):
-        for i in range(0, 15, 1):
-            for ii in range(0,2*i+1, 1 ):
-                result_a *= (2 * ii + 1) / (2 * ii +2)
-                result_b *= x * x
-            result_b *= x
-            result_c = result_a / (ii + 2)
-            result += result_c * result_b
-            result_a = 1.0; result_b = 1.0
-    return result
+	if x>=-1 and x<=1:
+		result = x
+		result_a = 1.0
+		result_b = 1.0
+		result_c = 1.0
+		ii = 0
+		if (x == 1 ):
+		    result = 90
+		elif (x == -1):
+		    result = -90
+		elif ((x < 1) and (x > -1)):
+		    for i in range(0, 50, 1):
+		        for ii in range(0,2*i+1, 1 ):
+		            result_a *= (2 * ii + 1) / (2 * ii +2)
+		            result_b *= x * x
+		        result_b *= x
+		        result_c = result_a / (ii + 2)
+		        result += result_c * result_b
+		        result_a = 1.0; result_b = 1.0
+		    result=math.degrees(result)
+		return round(result,5)
+	else:
+		error = True  #实现异常处理，当输入超出定义域范围，返回异常error
+		return error
 
 def atan(x):
     mult = 0
@@ -59,6 +65,8 @@ def atan(x):
     sign = 1
     if (x == 1):
         sum = myPI / 4
+    elif (x == 0):
+        sum = 0
     elif (x == -1):
         sum = -myPI / 4
     elif ((x > 1) or (x < -1)):
@@ -89,7 +97,7 @@ def atan(x):
             item = x_pow / (n + 2) * sign
             sum += item
             n += 2
-    return sum
+    return round(math.degrees(sum),5)
 
 
 
